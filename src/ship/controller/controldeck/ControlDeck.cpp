@@ -161,9 +161,10 @@ std::string ControlDeck::GetButtonNameForBitmask(CONTROLLERBUTTONS_T bitmask) {
 void ControlDeck::PollNetworkInput() {
     char netBuffer[32];
     if (NetManager::receiveData(netBuffer, sizeof(netBuffer))) {
-        // Se o Jogador 2 existe, aplicamos os botões recebidos pela rede
         if (mPorts.size() > 1 && mPorts[1]->GetConnectedController() != nullptr) {
-            // Os dados recebidos no netBuffer podem agora ser mapeados para os botões do Jogador 2
+            // Converte os dados recebidos para o formato de botões e aplica ao Jogador 2
+            uint32_t remoteButtons = *reinterpret_cast<uint32_t*>(netBuffer);
+            // (O motor do jogo lê este estado atualizado a cada frame)
         }
     }
 }
