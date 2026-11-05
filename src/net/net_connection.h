@@ -18,3 +18,5 @@ namespace NetManager {
 }
 
 #endif
+
+bool sendData(const char* data, int length, const char* ip, int port);
