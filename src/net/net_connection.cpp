@@ -52,3 +52,13 @@ bool receiveData(char* buffer, int length) {
     int bytesReceived = recv(sockfd, buffer, length, 0);
     return bytesReceived > 0; // Retorna true se recebeu dados com sucesso
 }
+
+bool sendData(const char* data, int length, const char* ip, int port) {
+    if (sockfd < 0) return false;
+    sockaddr_in destAddr{};
+    destAddr.sin_family = AF_INET;
+    destAddr.sin_port = htons(port);
+    inet_pton(AF_INET, ip, &destAddr.sin_addr);
+    int sent = sendto(sockfd, data, length, 0, (struct sockaddr*)&destAddr, sizeof(destAddr));
+    return sent >= 0;
+}
