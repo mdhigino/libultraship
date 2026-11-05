@@ -1,3 +1,4 @@
+#include "net/net_connection.h"
 #include "ship/window/Window.h"
 #include "ship/window/gui/Gui.h"
 #include <string>
