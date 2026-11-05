@@ -1,4 +1,3 @@
-#include "net/net_connection.h"
 #include "ship/window/Window.h"
 #include "ship/window/gui/Gui.h"
 #include <string>
@@ -8,6 +7,7 @@
 #include "ship/controller/controldevice/controller/mapping/keyboard/KeyboardScancodes.h"
 #include "ship/core/Context.h"
 #include "ship/controller/controldeck/ControlDeck.h"
+#include "net/net_connection.h"
 
 #ifdef __APPLE__
 #include "ship/utils/AppleFolderManager.h"
@@ -41,6 +41,7 @@ Window::~Window() {
 
 void Window::OnInit(const nlohmann::json& initArgs) {
     Component::OnInit(initArgs);
+  NetManager::initSocket(27015);
     // Mark the window as initialized before adding GUI to prevent access during GUI initialization
     MarkInitialized();
 
