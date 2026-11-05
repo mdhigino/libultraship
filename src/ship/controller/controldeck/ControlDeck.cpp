@@ -8,6 +8,7 @@
 #include <imgui.h>
 #include <stdexcept>
 #include "ship/controller/controldevice/controller/mapping/mouse/WheelHandler.h"
+#include "net/net_connection.h"
 
 namespace Ship {
 
@@ -109,6 +110,9 @@ bool ControlDeck::MouseGameInputBlocked() {
 }
 
 std::shared_ptr<Controller> ControlDeck::GetControllerByPort(uint8_t port) {
+    // Executa a verificação de pacotes UDP continuamente
+    PollNetworkInput();
+
     return mPorts[port]->GetConnectedController();
 }
 
@@ -153,6 +157,16 @@ std::string ControlDeck::GetButtonNameForBitmask(CONTROLLERBUTTONS_T bitmask) {
     return mButtonNames[bitmask];
 }
 
+// Verificação contínua de pacotes UDP para o Jogador 2
+void ControlDeck::PollNetworkInput() {
+    char netBuffer[32];
+    if (NetManager::receiveData(netBuffer, sizeof(netBuffer))) {
+        // Se o Jogador 2 existe, aplicamos os botões recebidos pela rede
+        if (mPorts.size() > 1 && mPorts[1]->GetConnectedController() != nullptr) {
+            // Os dados recebidos no netBuffer podem agora ser mapeados para os botões do Jogador 2
+        }
+    }
+}
 std::shared_ptr<Window> ControlDeck::GetWindow() const {
     if (!mWindow) {
         throw std::runtime_error("ControlDeck requires Window dependency");
