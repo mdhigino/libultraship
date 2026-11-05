@@ -1,6 +1,7 @@
 include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/cvars.cmake)
 
 add_library(libultraship STATIC)
+target_sources(libultraship PRIVATE net/net_connection.cpp)
 set_target_properties(libultraship PROPERTIES PREFIX "")
 set_property(TARGET libultraship PROPERTY CXX_STANDARD 20)
 # Need to set C11 for libgfxd (_Alignas)
