@@ -46,3 +46,9 @@ namespace NetManager {
         }
     }
 }
+
+bool receiveData(char* buffer, int length) {
+    if (sockfd < 0) return false;
+    int bytesReceived = recv(sockfd, buffer, length, 0);
+    return bytesReceived > 0; // Retorna true se recebeu dados com sucesso
+}
